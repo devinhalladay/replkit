@@ -62,7 +62,7 @@ let getDefaultConfig = ({
   root,
   publicDir,
   outDir,
-  pages
+  pages,
 }: {
   homeDirectory: string;
   root: string;
@@ -96,7 +96,7 @@ let getDefaultConfig = ({
     },
     logLevel: "info",
   };
-}
+};
 
 async function getConfiguration(homeDir?: string) {
   const homeDirectory = resolveHomeDirectory(homeDir);
@@ -110,9 +110,8 @@ async function getConfiguration(homeDir?: string) {
     root,
     publicDir,
     outDir,
-    pages
+    pages,
   });
-
 
   const customConfigPath = `${homeDirectory}/vite.config.custom.js`;
   let customConfig = {};

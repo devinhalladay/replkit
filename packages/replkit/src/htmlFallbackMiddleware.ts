@@ -1,8 +1,8 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import history from 'connect-history-api-fallback';
-import type { NextHandleFunction } from 'connect';
-import { parse as urlParse } from 'url';
+import fs from "node:fs";
+import path from "node:path";
+import history from "connect-history-api-fallback";
+import type { NextHandleFunction } from "connect";
+import { parse as urlParse } from "url";
 
 function fileExists(path: string) {
   return fs.existsSync(path) && fs.statSync(path).isFile();
@@ -17,10 +17,10 @@ export function trailingSlashMiddleware(root: string, publicDir: string) {
     const url = urlParse(req.url);
     const fsPath = path.join(root, url.pathname!);
     console.log({ pathname: url.pathname });
-    if (dirExists(fsPath) && !url.pathname!.endsWith('/')) {
+    if (dirExists(fsPath) && !url.pathname!.endsWith("/")) {
       // Redirect to the same URL but with trailing slash
       const newLocation =
-        url.pathname + '/' + (url.search ?? '') + (url.hash ?? '');
+        url.pathname + "/" + (url.search ?? "") + (url.hash ?? "");
       res.writeHead(302, { Location: newLocation });
       res.end();
 
@@ -34,7 +34,7 @@ export function trailingSlashMiddleware(root: string, publicDir: string) {
 export function htmlFallbackMiddleware(
   root: string,
   publicDir: string,
-  spaFallback: boolean
+  spaFallback: boolean,
 ): NextHandleFunction {
   const historyHtmlFallbackMiddleware = history({
     // support /dir/ without explicit index.html
@@ -58,7 +58,7 @@ export function htmlFallbackMiddleware(
           // 3. if it exists in root, and is a folder, try returning it + /index.html
           if (dirExists(fsPath)) {
             // console.log(request)
-            const indexFileUrl = path.join(parsedUrl.pathname, 'index.html');
+            const indexFileUrl = path.join(parsedUrl.pathname, "index.html");
             // console.log({ indexFileUrl, file: path.join(root, indexFileUrl) });
             if (fileExists(path.join(root, indexFileUrl))) {
               return indexFileUrl;
